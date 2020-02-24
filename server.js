@@ -1,18 +1,27 @@
 #!/usr/bin/env nodejs
-// eslint-disable-next-line no-unused-vars
+process.title = "senti_core"
 const dotenv = require('dotenv').config()
+if (dotenv.error) {
+	console.warn(dotenv.error)
+}
 const express = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
 const app = express()
-const webpush = require('web-push');
 
-//eslint-disable-next-line
-webpush.setVapidDetails('mailto:at@webhouse.dk', process.env.PUBLIC_VAPID_KEY, process.env.PRIVATE_VAPID_KEY)
 // API endpoint imports
+// const test = require('./api/index')
+// const auth = require('./api/auth/auth')
+// const basic = require('./api/auth/basic')
+// const organisationAuth = require('./api/auth/organisation')
+// const user = require('./api/entity/user')
+// const users = require('./api/entity/users')
+// const organisation = require('./api/entity/organisation')
+// const organisations = require('./api/entity/organisations')
+// const roles = require('./api/entity/roles')
+// const internal = require('./api/entity/internal')
 
-// eslint-disable-next-line no-undef
-const port = process.env.NODE_PORT || 3007
+const port = process.env.NODE_PORT || 3024
 
 app.use(helmet())
 app.use(express.json())
@@ -20,23 +29,16 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(cors())
 
-app.post('/subscribe', (req, res) => {
-	const subscription = req.body;
-	res.status(201).json({});
-	const payload = JSON.stringify({ title: 'test' });
-
-	console.log(subscription);
-
-	webpush.sendNotification(subscription, payload).catch(error => {
-		console.error(error.stack);
-	});
-});
+//---API---------------------------------------
+// app.use([test])
+// app.use([auth, basic, organisationAuth])
+// app.use([user, users, organisation, organisations, roles, internal])
 
 //---Start the express server---------------------------------------------------
 
 const startServer = () => {
 	app.listen(port, () => {
-		console.log('Senti Service started on port', port)
+		console.log('Senti Core Service started on port', port)
 	}).on('error', (err) => {
 		if (err.errno === 'EADDRINUSE') {
 			console.log('Service not started, port ' + port + ' is busy')
@@ -47,3 +49,8 @@ const startServer = () => {
 }
 
 startServer()
+
+// MQTT
+const secureEventMqttHandler = require('./mqtt/secureEventMqttHandler')
+const secureMqttClient = new secureEventMqttHandler(process.env.MQTT_HOST, process.env.MQTT_USER, process.env.MQTT_PASS, 'eventBroker')
+secureMqttClient.connect()

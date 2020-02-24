@@ -27,22 +27,22 @@
 	},
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/senti-iot/senti-gateway/issues"
+		"url": "https://github.com/senti-iot/senti-eventbroker/issues"
 	},
-	"homepage": "https://github.com/senti-iot/senti-gateway#readme",
+	"homepage": "https://github.com/senti-iot/senti-eventbroker#readme",
 	"dependencies": {
-		"apisauce": "^1.0.2",
+		"@sendgrid/mail": "^6.5.2",
+		"apisauce": "^1.1.1",
 		"cors": "^2.8.5",
 		"dotenv": "^8.0.0",
 		"eslint": "^6.6.0",
 		"express": "^4.16.4",
-		"express-pino-logger": "^4.0.0",
 		"find-config": "^1.0.0",
 		"helmet": "^3.21.2",
 		"moment": "^2.22.2",
 		"mqtt": "^2.18.8",
-		"pino": "^5.12.2",
-		"senti-apicore": "0.0.17",
-		"web-push": "^3.4.1"
+		"mysql2": "^2.1.0",
+		"senti-apicore": "0.0.25",
+		"uuid": "^3.3.3"
 	}
 }

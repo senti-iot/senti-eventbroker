@@ -1,13 +1,13 @@
 [Unit]
-# senti-gateway-dev.service
-Description=Senti Gateway
-Documentation=https://github.com/senti-iot/senti-gateway/blob/master/README.md
+# senti-eventbroker-dev.service
+Description=Senti EventBroker
+Documentation=https://github.com/senti-iot/senti-eventbroker/blob/master/README.md
 # After=network.target
 
 [Service]
-WorkingDirectory=/srv/nodejs/senti/services/gateway/development
+WorkingDirectory=/srv/nodejs/senti/services/eventbroker/development
 ExecStart=/usr/bin/node server.js
-Environment=NODE_PORT=3008
+Environment=NODE_PORT=3028
 Environment=NODE_ENV=development
 Type=simple
 Restart=always
