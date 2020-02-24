@@ -1,6 +1,6 @@
 [Unit]
 # senti-eventbroker.service
-Description=Senti Eventbroker
+Description=Senti EventBroker
 Documentation=https://github.com/senti-iot/senti-eventbroker/blob/master/README.md
 # After=network.target
 
