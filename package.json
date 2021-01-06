@@ -4,7 +4,9 @@
 	"deprecated": false,
 	"description": "Senti Event Broker service",
 	"main": "server.js",
-	"scripts": {},
+	"scripts": {
+		"test": "echo \"npm test temporarily disabled\""
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/senti-iot/senti-eventbroker.git"
@@ -32,7 +34,7 @@
 	"homepage": "https://github.com/senti-iot/senti-eventbroker#readme",
 	"dependencies": {
 		"@sendgrid/mail": "^6.5.2",
-		"apisauce": "^1.1.1",
+		"apisauce": "^2.0.1",
 		"cors": "^2.8.5",
 		"cron": "^1.8.2",
 		"dotenv": "^8.0.0",
@@ -43,7 +45,7 @@
 		"moment": "^2.22.2",
 		"mqtt": "^2.18.8",
 		"mysql2": "^2.1.0",
-		"senti-apicore": "^0.0.48",
+		"senti-apicore": "^0.0.53",
 		"uuid": "^3.3.3"
 	}
 }
