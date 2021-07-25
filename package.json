@@ -43,9 +43,9 @@
 		"find-config": "^1.0.0",
 		"helmet": "^3.21.2",
 		"moment": "^2.22.2",
-		"mqtt": "^2.18.8",
+		"mqtt": "^4.2.8",
 		"mysql2": "^2.1.0",
-		"senti-apicore": "^0.0.55",
+		"senti-apicore": "^0.0.57",
 		"uuid": "^3.3.3"
 	}
 }

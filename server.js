@@ -17,6 +17,7 @@ const CronJob = require('cron').CronJob;
 
 // API endpoint imports
 // const test = require('./api/index')
+const alarms = require('./api/alarms')
 
 const port = process.env.NODE_PORT || 3024
 
@@ -28,6 +29,7 @@ app.use(cors())
 
 //---API---------------------------------------
 // app.use([test])
+app.use([alarms])
 
 //---Start the express server---------------------------------------------------
 
@@ -55,6 +57,6 @@ const job = new CronJob('*/10 * * * * *', function() {
 	const d = new Date()
 	console.log(d)
 	eventService.eventCleanup()
-	
+
 });
 // job.start()
