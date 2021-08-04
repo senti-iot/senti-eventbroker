@@ -8,6 +8,7 @@ class secureEventMqttHandler extends secureMqttHandler {
 		this.eventService = new eventService()
 		this.topics = ['v1/event/#']
 		this.mqttClient.on('message', (topic, message) => {
+			// console.log('mqtt', topic, JSON.parse(message.toString()))
 			let arr = topic.split('/')
 			let data = JSON.parse(message.toString())
 			switch (arr[2]) {
