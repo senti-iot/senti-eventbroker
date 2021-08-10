@@ -9,6 +9,10 @@ const cors = require('cors')
 const helmet = require('helmet')
 const app = express()
 
+// AUTH CLIENT
+const sentiAuthClient = require('senti-apicore').sentiAuthClient
+const authClient = new sentiAuthClient(process.env.AUTHCLIENTURL, process.env.PASSWORDSALT)
+module.exports.authClient = authClient
 // MQTT
 const secureEventMqttHandler = require('./mqtt/secureEventMqttHandler')
 // EVENT CleanUp
@@ -18,6 +22,7 @@ const CronJob = require('cron').CronJob;
 // API endpoint imports
 // const test = require('./api/index')
 const alarms = require('./api/alarms')
+const notifications = require('./api/notifications')
 
 const port = process.env.NODE_PORT || 3024
 
@@ -29,7 +34,7 @@ app.use(cors())
 
 //---API---------------------------------------
 // app.use([test])
-app.use([alarms])
+app.use([alarms, notifications])
 
 //---Start the express server---------------------------------------------------
 
