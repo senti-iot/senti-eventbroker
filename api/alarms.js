@@ -28,9 +28,11 @@ router.get('/alarm/:uuid', async (req, res) => {
  * Get all Alarms
  */
 router.get('/alarms/:userUUID', async (req, res) => {
+
 	let alarmUUID = req.params.userUUID
+	console.log('alarmUUID', alarmUUID)
 	if (eService) {
-		let alarm = await eService.getEventRuleByUUID(alarmUUID)
+		let alarm = await eService.getEventRulesByUUID(alarmUUID)
 		if (alarm)
 			return res.status(200).json(alarm)
 		else
