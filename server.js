@@ -9,17 +9,20 @@ const cors = require('cors')
 const helmet = require('helmet')
 const app = express()
 
+// AUTH CLIENT
+const sentiAuthClient = require('senti-apicore').sentiAuthClient
+const authClient = new sentiAuthClient(process.env.AUTHCLIENTURL, process.env.PASSWORDSALT)
+module.exports.authClient = authClient
+// MQTT
+const secureEventMqttHandler = require('./mqtt/secureEventMqttHandler')
+// EVENT CleanUp
+const sentiEventService = require('./lib/event/eventService')
+const CronJob = require('cron').CronJob;
+
 // API endpoint imports
 // const test = require('./api/index')
-// const auth = require('./api/auth/auth')
-// const basic = require('./api/auth/basic')
-// const organisationAuth = require('./api/auth/organisation')
-// const user = require('./api/entity/user')
-// const users = require('./api/entity/users')
-// const organisation = require('./api/entity/organisation')
-// const organisations = require('./api/entity/organisations')
-// const roles = require('./api/entity/roles')
-// const internal = require('./api/entity/internal')
+const alarms = require('./api/alarms')
+const notifications = require('./api/notifications')
 
 const port = process.env.NODE_PORT || 3024
 
@@ -31,8 +34,7 @@ app.use(cors())
 
 //---API---------------------------------------
 // app.use([test])
-// app.use([auth, basic, organisationAuth])
-// app.use([user, users, organisation, organisations, roles, internal])
+app.use([alarms, notifications])
 
 //---Start the express server---------------------------------------------------
 
@@ -51,6 +53,15 @@ const startServer = () => {
 startServer()
 
 // MQTT
-const secureEventMqttHandler = require('./mqtt/secureEventMqttHandler')
 const secureMqttClient = new secureEventMqttHandler(process.env.MQTT_HOST, process.env.MQTT_USER, process.env.MQTT_PASS, 'eventBroker')
 secureMqttClient.connect()
+
+// Clean up events
+const eventService = new sentiEventService()
+const job = new CronJob('*/10 * * * * *', function() {
+	const d = new Date()
+	console.log(d)
+	eventService.eventCleanup()
+
+});
+// job.start()
