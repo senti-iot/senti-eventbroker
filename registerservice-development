@@ -11,7 +11,7 @@ service=$service_dir/$service_name
 echo Registering Senti Event Broker service for development ...
 
 
-if [ ! -e "$service" ]; then
+f [ ! -e "$service" ]; then
 	echo
     echo "Senti Event Broker service is not installed"
 	echo "Installing Senti Event Broker service ..."
@@ -21,12 +21,13 @@ if [ ! -e "$service" ]; then
 	sudo systemctl daemon-reload
 	echo "Starting $service ..."
 	sudo systemctl start $service_name
-else
+else 
     echo "Senti Event Broker service is already installed"
+	sudo cp $server_dir/$service_name $service_dir/$service_name
 	echo "Enabling $service ..."
 	sudo systemctl enable $service_name
 	sudo systemctl daemon-reload
 	echo "Starting $service ..."
 	sudo systemctl stop $service_name
 	sudo systemctl start $service_name
-fi
+fi 
