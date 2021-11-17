@@ -11,7 +11,7 @@ service=$service_dir/$service_name
 echo Registering Senti Event Broker service for production ...
 
 
-f [ ! -e "$service" ]; then
+if [ ! -e "$service" ]; then
 	echo
     echo "Senti Event Broker service is not installed"
 	echo "Installing Senti Event Broker service ..."
