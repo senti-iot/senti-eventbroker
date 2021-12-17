@@ -15,7 +15,7 @@ class secureEventMqttHandler extends secureMqttHandler {
 				let data = JSON.parse(message.toString())
 				switch (topics[0]) {
 					case 'v1':
-						// this.v1Message(topics, data)
+						this.v1Message(topics, data)
 						break;
 					case 'v2':
 						this.v2Message(topics, data)
