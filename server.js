@@ -13,6 +13,14 @@ const app = express()
 const sentiAuthClient = require('senti-apicore').sentiAuthClient
 const authClient = new sentiAuthClient(process.env.AUTHCLIENTURL, process.env.PASSWORDSALT)
 module.exports.authClient = authClient
+
+const sentiAclBackend = require('senti-apicore').sentiAclBackend
+const sentiAclClient = require('senti-apicore').sentiAclClient
+
+const aclBackend = new sentiAclBackend(process.env.ACLBACKENDTURL)
+const aclClient = new sentiAclClient(aclBackend)
+module.exports.aclClient = aclClient
+
 // MQTT
 const secureEventMqttHandler = require('./mqtt/secureEventMqttHandler')
 // EVENT CleanUp
@@ -23,6 +31,11 @@ const CronJob = require('cron').CronJob;
 // const test = require('./api/index')
 const alarms = require('./api/alarms')
 const notifications = require('./api/notifications')
+// API V2 Endpoints
+const sentiApiRules = require('./api/v2/rule/rules')
+const sentiApiRule = require('./api/v2/rule/rule')
+const sentiApiActions = require('./api/v2/action/actions')
+const sentiApiAction = require('./api/v2/action/action')
 
 const port = process.env.NODE_PORT || 3024
 
@@ -35,10 +48,14 @@ app.use(cors())
 //---API---------------------------------------
 // app.use([test])
 app.use([alarms, notifications])
+// API V2 Endpoints
+// app.use([apiRules])
+app.use([sentiApiRules, sentiApiRule, sentiApiActions, sentiApiAction])
 
 //---Start the express server---------------------------------------------------
 
 const startServer = () => {
+	// console.log(app._router.stack.filter(middleware => { return middleware.name == 'router'}).map(e => { return e.handle.stack })[2])
 	app.listen(port, () => {
 		console.log('Senti Core Service started on port', port)
 	}).on('error', (err) => {
