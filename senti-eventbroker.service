@@ -6,7 +6,7 @@ Documentation=https://github.com/senti-iot/senti-eventbroker/blob/master/README.
 
 [Service]
 WorkingDirectory=/srv/nodejs/senti/services/eventbroker/production
-ExecStart=/usr/bin/node server.js
+ExecStart=/usr/local/bin/node server.js
 Environment=NODE_PORT=3027
 Environment=NODE_ENV=production
 Type=simple
