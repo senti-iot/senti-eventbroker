@@ -36,6 +36,7 @@ const sentiApiRules = require('./api/v2/rule/rules')
 const sentiApiRule = require('./api/v2/rule/rule')
 const sentiApiActions = require('./api/v2/action/actions')
 const sentiApiAction = require('./api/v2/action/action')
+const sentiApiSmsGateways = require('./api/v2/smsGateways/smsGateways')
 
 const port = process.env.NODE_PORT || 3024
 
@@ -50,7 +51,7 @@ app.use(cors())
 app.use([alarms, notifications])
 // API V2 Endpoints
 // app.use([apiRules])
-app.use([sentiApiRules, sentiApiRule, sentiApiActions, sentiApiAction])
+app.use([sentiApiRules, sentiApiRule, sentiApiActions, sentiApiAction, sentiApiSmsGateways])
 
 //---Start the express server---------------------------------------------------
 
