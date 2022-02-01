@@ -70,6 +70,7 @@ const startServer = () => {
 
 startServer()
 
+console.log(process.version)
 // MQTT
 const secureMqttClient = new secureEventMqttHandler(process.env.MQTT_HOST, process.env.MQTT_USER, process.env.MQTT_PASS, 'eventBroker')
 secureMqttClient.connect()
