@@ -247,4 +247,49 @@ console.log(req.params, req.body)
         res.status(500).json({ message: error.message, stack: error.stack })
     }
 })
+
+
+router.get('/v2/testcond/:uuid', async (req, res) => {
+    try {
+
+        /**
+         * Check if the user is logged in and his lease is still good
+         */
+        let lease = await authClient.getLease(req)
+        if (lease === false) {
+            return res.status(401).json()
+        }
+        /**
+         * Check if the user has access to the eventRule
+         */
+        let access = await aclClient.testPrivileges(lease.uuid, req.params.uuid, [sentiAclPriviledge.eventRule.read])
+        if (access.allowed === false) {
+            return res.status(403).json()
+        }
+        /**
+         * Get the eventRule
+         */
+         succesResponse.result = []
+        let eventRule = await eventService.getEventRuleByUUID(req.params.uuid)
+        if (eventRule !== false) {
+            if (Array.isArray(eventRule.condition)) {
+                // console.log(eventRule.condition)
+                let test = eventService.makeConditions({ temperature: 21 }, eventRule.condition)
+                succesResponse.result.push(test)
+                succesResponse.result.push(eval(test))
+            }
+            succesResponse.result.push(eventRule)
+
+            return res.status(200).json(succesResponse)
+        } else {
+            /**
+             * No rule found return 404
+             */
+            return res.status(404).json()
+        }
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message, stack: error.stack })
+    }
+})
 module.exports = router
