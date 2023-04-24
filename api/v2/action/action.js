@@ -74,7 +74,6 @@ router.post('/v2/action', async (req, res) => {
          * Check if the user has access to the eventRule
          */
         let access = await aclClient.testPrivileges(lease.uuid, eventAction.ruleUUID, [sentiAclPriviledge.eventRule.modify])
-        console.log(access)
         if (access.allowed === false) {
             return res.status(403).json()
         }
@@ -122,7 +121,6 @@ router.put('/v2/action/:uuid', async (req, res) => {
          * Check if the user has access to the eventRule
          */
         let access = await aclClient.testPrivileges(lease.uuid, eventAction.ruleUUID, [sentiAclPriviledge.eventRule.modify])
-        console.log(access)
         if (access.allowed === false) {
             return res.status(403).json()
         }
@@ -162,7 +160,6 @@ router.delete('/v2/action/:uuid', async (req, res) => {
          * Check if the user has access to the eventRule
          */
         let access = await aclClient.testPrivileges(lease.uuid, eventAction.ruleUUID, [sentiAclPriviledge.eventRule.modify])
-        console.log(access)
         if (access.allowed === false) {
             return res.status(403).json()
         }
