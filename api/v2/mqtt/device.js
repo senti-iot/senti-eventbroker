@@ -79,7 +79,7 @@ router.post('/v2/mqtt/device/:uuid', async (req, res) => {
 		}
 		let eventRule = new EventRuleV2()
 		let parentUUID = device.registry.org.uuid
-		eventRule.name = 'MQTT forwarder for ' + device.name
+		eventRule.name = 'MQTT forward: ' + device.name
 		eventRule.deviceUUID = device.uuid
 		eventRule.cloudFunction = 209
 		eventRule.config = {
