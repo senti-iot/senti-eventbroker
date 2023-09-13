@@ -1,0 +1,4 @@
+.*
+registrerservice*
+deploy*.enc
+.env
