@@ -30,7 +30,7 @@ class secureEventMqttHandler extends secureMqttHandler {
 	v1Message(topics, message) {
 		switch (topics[2]) {
 			case 'data':
-				//this.eventService.findRulesAndExecute(message, parseInt(topics[3]), parseInt(topics[4]), parseInt(topics[5]))
+				this.eventService.findRulesAndExecute(message, parseInt(topics[3]), parseInt(topics[4]), parseInt(topics[5]))
 				break;
 		}
 	}
@@ -39,7 +39,7 @@ class secureEventMqttHandler extends secureMqttHandler {
 			case 'data':
 				// console.log(message)
 				console.log('v2/event/data', topics[3], topics[4], topics[5])
-				//this.eventServiceV2.findRulesAndExecute(message, topics[3], topics[4], topics[5])
+				this.eventServiceV2.findRulesAndExecute(message, topics[3], topics[4], topics[5])
 				break;
 		}
 	}
