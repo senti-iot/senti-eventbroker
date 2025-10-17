@@ -29,6 +29,7 @@ router.get('/v2/mqtt/device/:uuid', async (req, res) => {
         if (lease === false) {
             return res.status(401).json()
         }
+		console.log(req.params.uuid, lease)
         /**
          * Check if the user has access to the eventRule
          */
@@ -40,6 +41,7 @@ router.get('/v2/mqtt/device/:uuid', async (req, res) => {
          * Get the eventRule
          */
         let eventAction = await mqttPublish.getActionByDeviceId(req.params.uuid)
+		console.log(eventAction)
         if (eventAction !== false) {
             succesResponse.result = eventAction
             return res.status(200).json(succesResponse)
@@ -137,7 +139,7 @@ router.put('/v2/mqtt/device/:uuid', async (req, res) => {
 		let eventAction = await mqttPublish.getActionByDeviceId(req.params.uuid)
 		eventAction.config = req.body.config
 		eventAction.host = req.body.host
-		// return res.status(200).json(eventAction)	
+		// return res.status(200).json(eventAction)
 		let eventActionRes = await eventService.updateAction(eventAction)
 		if (eventActionRes !== false) {
 			succesResponse.result = eventActionRes
