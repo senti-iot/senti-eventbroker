@@ -21,6 +21,10 @@ const aclBackend = new sentiAclBackend(process.env.ACLBACKENDTURL)
 const aclClient = new sentiAclClient(aclBackend)
 module.exports.aclClient = aclClient
 
+const eventRuleRunningService = require('./lib/event/eventRuleRunningService')
+const sentiEventRuleRunning = new eventRuleRunningService()
+module.exports.sentiEventRuleRunning = sentiEventRuleRunning
+
 // MQTT
 const secureEventMqttHandler = require('./mqtt/secureEventMqttHandler')
 // EVENT CleanUp
