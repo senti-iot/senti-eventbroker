@@ -25,6 +25,14 @@ const eventRuleRunningService = require('./lib/event/eventRuleRunningService')
 const sentiEventRuleRunning = new eventRuleRunningService()
 module.exports.sentiEventRuleRunning = sentiEventRuleRunning
 
+//#region sentiSubscriptionCron/CRON init
+const sentiSubscriptionCron = require('./lib/event/sentiSubscriptionCron')
+const sentiCron = new sentiSubscriptionCron()
+module.exports.sentiCron = sentiCron
+sentiCron.init()
+//#endregion
+
+
 // MQTT
 const secureEventMqttHandler = require('./mqtt/secureEventMqttHandler')
 // EVENT CleanUp
@@ -42,7 +50,7 @@ const sentiApiActions = require('./api/v2/action/actions')
 const sentiApiAction = require('./api/v2/action/action')
 const sentiApiSmsGateways = require('./api/v2/smsGateways/smsGateways')
 const sentiApiMqttDevice = require('./api/v2/mqtt/device')
-
+const sentiApiScheduledEvent = require('./api/v2/schedule/scheduledevent')
 const port = process.env.NODE_PORT || 3024
 
 app.use(helmet())
@@ -56,7 +64,7 @@ app.use(cors())
 app.use([alarms, notifications])
 // API V2 Endpoints
 // app.use([apiRules])
-app.use([sentiApiRules, sentiApiRule, sentiApiActions, sentiApiAction, sentiApiSmsGateways, sentiApiMqttDevice])
+app.use([sentiApiRules, sentiApiRule, sentiApiActions, sentiApiAction, sentiApiSmsGateways, sentiApiMqttDevice, sentiApiScheduledEvent])
 
 //---Start the express server---------------------------------------------------
 
