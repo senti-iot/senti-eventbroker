@@ -71,6 +71,59 @@ router.get('/v2/scheduled/rules/:uuid', async (req, res) => {
         res.status(500).json(errorResponse)
     }
 })
+router.get('/v2/scheduled/rule/:uuid', async (req, res) => {
+    try {
+        /**
+         * Check if the user is logged in and his lease is still good
+         */
+        let lease = await authClient.getLease(req)
+        if (lease === false) {
+            return res.status(401).json()
+        }
+
+		let subscriptionRule = await subscriptionService.getSubscriptionRuleByUuid(req.params.uuid)
+		console.log(subscriptionRule)
+
+        succesResponse.result = subscriptionRule
+        return res.status(200).json(succesResponse)
+    }
+    catch (error) {
+        errorResponse.error = { message: "Get action - error: " + error.message, stack: error.stack }
+        console.log(errorResponse)
+        res.status(500).json(errorResponse)
+    }
+})
+router.delete('/v2/scheduled/rule/:uuid', async (req, res) => {
+    try {
+        /**
+         * Check if the user is logged in and his lease is still good
+         */
+        let lease = await authClient.getLease(req)
+        if (lease === false) {
+            return res.status(401).json()
+        }
+
+		let subscriptionRule = await subscriptionService.getSubscriptionRuleByUuid(req.params.uuid)
+		if (subscriptionRule === false) {
+			throw new Error('Rule not found')
+		}
+		// console.log(subscriptionRule, lease, subscriptionRule.parentUser, lease.uuid, subscriptionRule.parentUser !== lease.uuid)
+		if (subscriptionRule.parentUser !== lease.uuid) {
+			// console.log('No access to delete this rule')
+			return res.status(403).json()
+		}
+		subscriptionRule = await subscriptionService.deleteSubscriptionRule(subscriptionRule.id)
+
+
+        succesResponse.result = subscriptionRule
+        return res.status(200).json(succesResponse)
+    }
+    catch (error) {
+        errorResponse.error = { message: "Get action - error: " + error.message, stack: error.stack }
+        console.log(errorResponse)
+        res.status(500).json(errorResponse)
+    }
+})
 /**
  * Create scheduled rule
  */
